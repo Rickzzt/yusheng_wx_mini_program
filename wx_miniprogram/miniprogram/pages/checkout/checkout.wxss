@@ -1,0 +1,43 @@
+.order-room {
+  align-items: center;
+  display: flex;
+  gap: 20rpx;
+}
+
+.order-room image {
+  border-radius: 22rpx;
+  flex: 0 0 180rpx;
+  height: 160rpx;
+  width: 180rpx;
+}
+
+.room-name {
+  color: #24332f;
+  display: block;
+  font-size: 32rpx;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 10rpx;
+}
+
+.fee-row {
+  align-items: center;
+  border-bottom: 1rpx solid rgba(65, 82, 75, 0.1);
+  color: #44544f;
+  display: flex;
+  font-size: 28rpx;
+  justify-content: space-between;
+  padding: 22rpx 0;
+}
+
+.safe-note {
+  color: #728078;
+  display: block;
+  font-size: 24rpx;
+  line-height: 1.6;
+  margin-top: 22rpx;
+}
+
+.submit {
+  margin-top: 32rpx;
+}

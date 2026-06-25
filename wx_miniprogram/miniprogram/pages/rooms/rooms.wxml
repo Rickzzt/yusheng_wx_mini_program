@@ -1,0 +1,51 @@
+<view class="page">
+  <view class="section-title">
+    <text>选择房型</text>
+    <text class="muted">6 类房型 · 9 间客房</text>
+  </view>
+
+  <scroll-view class="filter-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="filter-row">
+      <button
+        wx:for="{{filters}}"
+        wx:key="*this"
+        class="filter {{activeFilter === item ? 'active' : ''}}"
+        bindtap="selectFilter"
+        data-filter="{{item}}"
+      >{{item}}</button>
+    </view>
+  </scroll-view>
+
+  <view class="room-list">
+    <view class="room-card card" wx:for="{{visibleRooms}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="room-cover">
+        <image src="{{item.images[0]}}" mode="aspectFill" />
+      </view>
+      <view class="room-body">
+        <view class="room-head">
+          <text class="room-name">{{item.name}}</text>
+          <text class="status">可订 {{item.stock}}</text>
+        </view>
+        <text class="muted">{{item.position}}</text>
+        <view class="tag-row">
+          <text class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+        <view class="facts">
+          <text>{{item.area}}</text>
+          <text>{{item.bed}}</text>
+          <text>可住{{item.capacity}}人</text>
+        </view>
+        <view class="room-bottom">
+          <view class="price-stack">
+            <text class="deal-label">今日优惠</text>
+            <view class="price-line">
+              <text class="price">¥{{item.price}}<small>/晚</small></text>
+              <text class="original-price">¥{{item.originalPrice}}</text>
+            </view>
+          </view>
+          <text class="detail-link">查看详情</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,66 @@
+<view class="page" wx:if="{{room}}">
+  <swiper class="detail-swiper" indicator-dots circular>
+    <swiper-item wx:for="{{room.images}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill" bindtap="previewImages" data-src="{{item}}" />
+    </swiper-item>
+  </swiper>
+
+  <view class="card summary">
+    <text class="room-name">{{room.name}}</text>
+    <text class="muted">{{room.intro}}</text>
+    <view class="tag-row">
+      <text class="tag" wx:for="{{room.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="facts-grid">
+      <view><text>{{room.area}}</text><text class="muted">面积</text></view>
+      <view><text>{{room.bed}}</text><text class="muted">床型</text></view>
+      <view><text>{{room.capacity}} 人</text><text class="muted">可住</text></view>
+    </view>
+    <text class="photo-note" wx:if="{{room.images.length < 3}}">当前图片少于 3 张，待补图</text>
+  </view>
+
+  <view class="section card">
+    <view class="section-title">
+      <text>选择入住</text>
+      <text class="muted">库存 {{room.stock}}</text>
+    </view>
+    <view class="picker-row">
+      <picker mode="date" value="{{checkIn}}" bindchange="onDateChange" data-field="checkIn">
+        <view><text class="muted">入住</text><text>{{checkIn}}</text></view>
+      </picker>
+      <picker mode="date" value="{{checkOut}}" bindchange="onDateChange" data-field="checkOut">
+        <view><text class="muted">离店</text><text>{{checkOut}}</text></view>
+      </picker>
+    </view>
+    <picker mode="selector" range="{{guestOptions}}" bindchange="onGuestsChange">
+      <view class="guest-picker"><text>入住人数</text><text>{{guests}} 人</text></view>
+    </picker>
+    <view class="total-row">
+      <text class="muted">{{nights}} 晚 · 下单前再次校验房态和价格</text>
+      <text class="price">¥{{total}}</text>
+    </view>
+  </view>
+
+  <view class="section card">
+    <view class="section-title"><text>设施与须知</text></view>
+    <view class="tag-row">
+      <text class="tag" wx:for="{{room.facilities}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="notice-list">
+      <text wx:for="{{room.notice}}" wx:key="*this">· {{item}}</text>
+      <text>· {{room.cancelRule}}</text>
+    </view>
+  </view>
+
+  <view class="sticky-bar">
+    <view class="price-stack">
+      <text class="deal-label">今日优惠</text>
+      <view class="price-line">
+        <text class="price">¥{{room.price}}<small>/晚</small></text>
+        <text class="original-price">¥{{room.originalPrice}}</text>
+      </view>
+      <text class="muted">含税费以支付页为准</text>
+    </view>
+    <button class="primary-btn" bindtap="goCheckout">订房</button>
+  </view>
+</view>

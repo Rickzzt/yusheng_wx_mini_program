@@ -1,0 +1,56 @@
+.about-card {
+  margin-top: -52rpx;
+  position: relative;
+}
+
+.kicker {
+  color: #3f685e;
+  display: block;
+  font-size: 22rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+
+.title {
+  color: #24332f;
+  display: block;
+  font-size: 46rpx;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 14rpx;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.list view {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.list text:first-child {
+  color: #24332f;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.list text:last-child {
+  color: #5d6d66;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.contact {
+  margin-top: 18rpx;
+}
+
+.admin-link {
+  color: #728078;
+  font-size: 24rpx;
+  margin-top: 24rpx;
+  text-align: center;
+}

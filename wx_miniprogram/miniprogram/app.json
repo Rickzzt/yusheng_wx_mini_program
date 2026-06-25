@@ -1,0 +1,48 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/rooms/rooms",
+    "pages/room-detail/room-detail",
+    "pages/checkout/checkout",
+    "pages/orders/orders",
+    "pages/order-detail/order-detail",
+    "pages/about/about",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "backgroundColor": "#F5F3EE",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F5F3EE",
+    "navigationBarTitleText": "云生小楼民宿",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#728078",
+    "selectedColor": "#1F5F58",
+    "backgroundColor": "#FFFDF8",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/icons/home.png",
+        "selectedIconPath": "images/icons/home-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/rooms/rooms",
+        "iconPath": "images/icons/goods.png",
+        "selectedIconPath": "images/icons/goods-active.png",
+        "text": "房间"
+      },
+      {
+        "pagePath": "pages/orders/orders",
+        "iconPath": "images/icons/business.png",
+        "selectedIconPath": "images/icons/business-active.png",
+        "text": "订单"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

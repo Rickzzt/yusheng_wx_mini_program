@@ -1,0 +1,93 @@
+.intro {
+  margin-top: -72rpx;
+  position: relative;
+}
+
+.kicker {
+  color: #3f685e;
+  display: block;
+  font-size: 22rpx;
+  font-weight: 700;
+  letter-spacing: 1rpx;
+  margin-bottom: 14rpx;
+}
+
+.title {
+  color: #24332f;
+  display: block;
+  font-size: 48rpx;
+  font-weight: 800;
+  line-height: 1.18;
+}
+
+.subtitle {
+  color: #5d6d66;
+  display: block;
+  font-size: 28rpx;
+  line-height: 1.7;
+  margin: 18rpx 0 24rpx;
+}
+
+.meta-row {
+  border-bottom: 1rpx solid rgba(65, 82, 75, 0.12);
+  border-top: 1rpx solid rgba(65, 82, 75, 0.12);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 24rpx;
+  padding: 22rpx 0;
+}
+
+.meta-num {
+  color: #1f5f58;
+  display: block;
+  font-size: 34rpx;
+  font-weight: 800;
+}
+
+.room-card {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+  padding: 18rpx;
+}
+
+.room-cover {
+  border-radius: 22rpx;
+  flex: 0 0 210rpx;
+  height: 210rpx;
+  overflow: hidden;
+}
+
+.room-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.room-name {
+  color: #24332f;
+  display: block;
+  font-size: 30rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.room-bottom {
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.book-link {
+  color: #1f5f58;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.location-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}

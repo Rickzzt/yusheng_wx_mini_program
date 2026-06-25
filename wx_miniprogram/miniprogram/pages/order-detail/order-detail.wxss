@@ -1,0 +1,44 @@
+.detail,
+.empty {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.status-text {
+  color: #1f5f58;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.room-name {
+  color: #24332f;
+  font-size: 42rpx;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.info-list {
+  border-bottom: 1rpx solid rgba(65, 82, 75, 0.1);
+  border-top: 1rpx solid rgba(65, 82, 75, 0.1);
+  margin: 8rpx 0;
+  padding: 8rpx 0;
+}
+
+.info-list view {
+  align-items: center;
+  color: #44544f;
+  display: flex;
+  font-size: 27rpx;
+  justify-content: space-between;
+  padding: 18rpx 0;
+}
+
+.notice {
+  background: #f7f6f0;
+  border-radius: 22rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding: 22rpx;
+}
