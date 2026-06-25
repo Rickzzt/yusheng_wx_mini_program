@@ -1,0 +1,70 @@
+<view class="page">
+  <view class="hero-image">
+    <image src="{{hero}}" mode="aspectFill" />
+  </view>
+
+  <view class="intro card">
+    <text class="kicker">{{hotel.city}} · {{hotel.level}}</text>
+    <text class="title">{{hotel.name}}</text>
+    <text class="subtitle">浙江平阳海边小楼，住进海景、花园与慢生活。</text>
+    <view class="meta-row">
+      <view>
+        <text class="meta-num">{{hotel.opened}}</text>
+        <text class="muted">年开业</text>
+      </view>
+      <view>
+        <text class="meta-num">{{hotel.roomCount}}</text>
+        <text class="muted">间客房</text>
+      </view>
+      <view>
+        <text class="meta-num">{{hotel.rating}}</text>
+        <text class="muted">{{hotel.reviewCount}}条点评</text>
+      </view>
+    </view>
+    <view class="tag-row">
+      <text class="tag" wx:for="{{hotel.tags}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="split-actions">
+      <button class="primary-btn" bindtap="goRooms">查看房间</button>
+      <button class="ghost-btn" bindtap="goAbout">联系民宿</button>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section-title">
+      <text>推荐房型</text>
+      <text class="muted" bindtap="goRooms">全部房型</text>
+    </view>
+    <view class="room-card card" wx:for="{{recommended}}" wx:key="id" bindtap="goRoom" data-id="{{item.id}}">
+      <view class="room-cover">
+        <image src="{{item.images[0]}}" mode="aspectFill" />
+      </view>
+      <view class="room-info">
+        <text class="room-name">{{item.name}}</text>
+        <text class="muted">{{item.position}} · 可住{{item.capacity}}人</text>
+        <view class="tag-row">
+          <text class="tag" wx:for="{{item.tags}}" wx:key="*this">{{item}}</text>
+        </view>
+        <view class="room-bottom">
+          <view class="price-stack">
+            <text class="deal-label">今日优惠</text>
+            <view class="price-line">
+              <text class="price">¥{{item.price}}<small>/晚</small></text>
+              <text class="original-price">¥{{item.originalPrice}}</text>
+            </view>
+          </view>
+          <text class="book-link">订房</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section card location-card">
+    <text class="room-name">到店信息</text>
+    <text class="muted">{{hotel.address}}</text>
+    <view class="split-actions">
+      <button class="ghost-btn" bindtap="openLocation">导航</button>
+      <button class="ghost-btn" bindtap="callHotel">电话</button>
+    </view>
+  </view>
+</view>

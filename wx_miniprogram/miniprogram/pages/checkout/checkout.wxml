@@ -1,0 +1,35 @@
+<view class="page" wx:if="{{room}}">
+  <view class="card order-room">
+    <image src="{{room.images[0]}}" mode="aspectFill" />
+    <view>
+      <text class="room-name">{{room.name}}</text>
+      <text class="muted">{{checkIn}} 至 {{checkOut}} · {{nights}} 晚</text>
+      <text class="muted">入住 {{guests}} 人 · {{room.cancelRule}}</text>
+    </view>
+  </view>
+
+  <view class="section card">
+    <view class="section-title"><text>入住信息</text></view>
+    <view class="field">
+      <label>联系人姓名</label>
+      <input placeholder="请填写真实姓名" value="{{contactName}}" bindinput="onInput" data-field="contactName" />
+    </view>
+    <view class="field">
+      <label>手机号</label>
+      <input type="number" maxlength="11" placeholder="用于接收订单确认" value="{{phone}}" bindinput="onInput" data-field="phone" />
+    </view>
+    <view class="field">
+      <label>备注</label>
+      <textarea maxlength="80" placeholder="儿童用品、到店时间等" value="{{remark}}" bindinput="onInput" data-field="remark" />
+    </view>
+  </view>
+
+  <view class="section card">
+    <view class="section-title"><text>费用明细</text></view>
+    <view class="fee-row"><text>房费</text><text>¥{{room.price}} × {{nights}} 晚</text></view>
+    <view class="fee-row"><text>订单总价</text><text class="price">¥{{total}}</text></view>
+    <text class="safe-note">提交前需由后端再次校验房态、库存和最终价格。当前为开发态模拟支付。</text>
+  </view>
+
+  <button class="primary-btn submit" bindtap="submitOrder">提交订单并支付</button>
+</view>

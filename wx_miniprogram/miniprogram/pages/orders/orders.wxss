@@ -1,0 +1,90 @@
+.filter-scroll {
+  margin: 0 -28rpx 24rpx;
+  width: calc(100% + 56rpx);
+}
+
+.filter-row {
+  display: flex;
+  gap: 14rpx;
+  padding: 0 28rpx 4rpx;
+  white-space: nowrap;
+}
+
+.filter {
+  background: #fffdf8;
+  border: 1rpx solid rgba(65, 82, 75, 0.13);
+  border-radius: 999rpx;
+  color: #60726a;
+  font-size: 26rpx;
+  padding: 16rpx 28rpx;
+}
+
+.filter.active {
+  background: #1f5f58;
+  color: #fffdf8;
+}
+
+.empty {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding: 60rpx 28rpx;
+}
+
+.order-card {
+  margin-bottom: 22rpx;
+}
+
+.order-card image {
+  border-radius: 22rpx;
+  height: 260rpx;
+  width: 100%;
+}
+
+.order-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+  padding-top: 20rpx;
+}
+
+.order-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.room-name {
+  color: #24332f;
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.status {
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  font-weight: 700;
+  padding: 8rpx 14rpx;
+}
+
+.pending {
+  background: #f8efe2;
+  color: #9d5a24;
+}
+
+.paid,
+.completed {
+  background: #e8f4ef;
+  color: #1f5f58;
+}
+
+.cancelled,
+.refunded {
+  background: #eef0ec;
+  color: #728078;
+}
+
+.detail-btn {
+  margin-top: 20rpx;
+}

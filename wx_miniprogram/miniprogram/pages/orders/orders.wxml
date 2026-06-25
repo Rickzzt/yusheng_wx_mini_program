@@ -1,0 +1,35 @@
+<view class="page">
+  <scroll-view class="filter-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="filter-row">
+      <button
+        wx:for="{{tabs}}"
+        wx:key="*this"
+        class="filter {{activeTab === item ? 'active' : ''}}"
+        bindtap="selectTab"
+        data-tab="{{item}}"
+      >{{item}}</button>
+    </view>
+  </scroll-view>
+
+  <view class="empty card" wx:if="{{!visibleOrders.length}}">
+    <text>暂无订单</text>
+    <text class="muted">选择房间并提交订单后会显示在这里。</text>
+  </view>
+
+  <view class="order-card card" wx:for="{{visibleOrders}}" wx:key="id">
+    <image src="{{item.cover}}" mode="aspectFill" />
+    <view class="order-main" bindtap="goDetail" data-id="{{item.id}}">
+      <view class="order-head">
+        <text class="room-name">{{item.roomName}}</text>
+        <text class="status {{item.status}}">{{statusLabels[item.status]}}</text>
+      </view>
+      <text class="muted">{{item.checkIn}} 至 {{item.checkOut}} · {{item.nights}} 晚</text>
+      <text class="price">¥{{item.amount}}</text>
+    </view>
+    <view class="split-actions" wx:if="{{item.status === 'pending'}}">
+      <button class="ghost-btn" bindtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
+      <button class="primary-btn" bindtap="payOrder" data-id="{{item.id}}">继续支付</button>
+    </view>
+    <button wx:else class="ghost-btn detail-btn" bindtap="goDetail" data-id="{{item.id}}">查看详情</button>
+  </view>
+</view>

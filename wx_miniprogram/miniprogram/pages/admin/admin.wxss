@@ -1,0 +1,64 @@
+.admin-head,
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.title {
+  color: #24332f;
+  font-size: 42rpx;
+  font-weight: 800;
+}
+
+.module-row {
+  display: grid;
+  gap: 14rpx;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 24rpx;
+}
+
+.module {
+  background: #fffdf8;
+  border: 1rpx solid rgba(65, 82, 75, 0.13);
+  border-radius: 999rpx;
+  color: #60726a;
+  font-size: 26rpx;
+  padding: 16rpx 0;
+}
+
+.module.active {
+  background: #1f5f58;
+  color: #fffdf8;
+}
+
+.admin-row {
+  align-items: center;
+  border-bottom: 1rpx solid rgba(65, 82, 75, 0.1);
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0;
+}
+
+.admin-row text:first-child {
+  color: #24332f;
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.empty {
+  color: #728078;
+  font-size: 26rpx;
+  line-height: 1.6;
+}
+
+.mini {
+  font-size: 24rpx;
+  height: 64rpx;
+  min-width: 150rpx;
+}
+
+.refund-btn {
+  margin-top: 20rpx;
+}

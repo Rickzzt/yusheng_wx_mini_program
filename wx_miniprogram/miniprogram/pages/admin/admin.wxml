@@ -1,0 +1,53 @@
+<view class="page">
+  <view class="card admin-head">
+    <text class="title">轻量经营者后台</text>
+    <text class="muted">首版用于查看订单、维护房态价格和记录退款处理；登录与权限需接后端。</text>
+  </view>
+
+  <view class="module-row">
+    <button
+      wx:for="{{modules}}"
+      wx:key="id"
+      class="module {{activeModule === item.id ? 'active' : ''}}"
+      bindtap="selectModule"
+      data-id="{{item.id}}"
+    >{{item.name}}</button>
+  </view>
+
+  <view class="card section" wx:if="{{activeModule === 'orders'}}">
+    <view class="section-title"><text>订单列表</text><text class="muted">{{orders.length}} 单</text></view>
+    <view class="empty" wx:if="{{!orders.length}}">暂无真实订单，住客下单后显示在这里。</view>
+    <view class="admin-row" wx:for="{{orders}}" wx:key="id">
+      <text>{{item.roomName}}</text>
+      <text>{{statusLabels[item.status]}} · ¥{{item.amount}}</text>
+    </view>
+  </view>
+
+  <view class="card section" wx:elif="{{activeModule === 'inventory'}}">
+    <view class="section-title"><text>房态日历</text><text class="muted">开发态</text></view>
+    <view class="admin-row" wx:for="{{rooms}}" wx:key="id">
+      <view>
+        <text>{{item.name}}</text>
+        <text class="muted">今日库存 {{item.stock}}</text>
+      </view>
+      <button class="ghost-btn mini" bindtap="updateInventory" data-name="{{item.name}}">标记可订</button>
+    </view>
+  </view>
+
+  <view class="card section" wx:elif="{{activeModule === 'price'}}">
+    <view class="section-title"><text>价格日历</text><text class="muted">节假日价待补充</text></view>
+    <view class="admin-row" wx:for="{{rooms}}" wx:key="id">
+      <view>
+        <text>{{item.name}}</text>
+        <text class="muted">基础价 ¥{{item.price}}</text>
+      </view>
+      <button class="ghost-btn mini" bindtap="updatePrice" data-name="{{item.name}}">调价</button>
+    </view>
+  </view>
+
+  <view class="card section" wx:else>
+    <view class="section-title"><text>退款处理</text></view>
+    <text class="muted">退款由经营者人工审核并记录结果，首版不提供用户自助退款入口。</text>
+    <button class="primary-btn refund-btn" bindtap="recordRefund">记录退款处理</button>
+  </view>
+</view>
