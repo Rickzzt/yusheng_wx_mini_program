@@ -15,6 +15,10 @@
       <input placeholder="请填写真实姓名" value="{{contactName}}" bindinput="onInput" data-field="contactName" />
     </view>
     <view class="field">
+      <label>身份证号</label>
+      <input maxlength="18" placeholder="用于入住登记" value="{{idNo}}" bindinput="onInput" data-field="idNo" />
+    </view>
+    <view class="field">
       <label>手机号</label>
       <input type="number" maxlength="11" placeholder="用于接收订单确认" value="{{phone}}" bindinput="onInput" data-field="phone" />
     </view>

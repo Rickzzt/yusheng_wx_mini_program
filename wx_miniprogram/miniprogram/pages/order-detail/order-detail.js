@@ -1,24 +1,28 @@
-const { demoOrders, hotel, statusLabels } = require("../../data/hotel");
+const { statusLabels } = require("../../data/hotel");
+const api = require("../../services/api");
 
 Page({
   data: {
     order: null,
     statusLabels,
-    hotel,
+    hotel: null,
   },
 
-  onLoad(query) {
-    const orders = wx.getStorageSync("orders") || [];
-    const order = [...orders, ...demoOrders].find((item) => item.id === query.id);
-    this.setData({ order });
+  async onLoad(query) {
+    try {
+      const [hotel, order] = await Promise.all([api.getHotelProfile(), api.getOrderDetail(query.id)]);
+      this.setData({ hotel, order });
+    } catch (error) {
+      wx.showToast({ title: error.message, icon: "none" });
+    }
   },
 
   callHotel() {
-    wx.makePhoneCall({ phoneNumber: hotel.phone });
+    wx.makePhoneCall({ phoneNumber: this.data.hotel.phone });
   },
 
   copyAddress() {
-    wx.setClipboardData({ data: hotel.address });
+    wx.setClipboardData({ data: this.data.hotel.address });
   },
 
   goOrders() {

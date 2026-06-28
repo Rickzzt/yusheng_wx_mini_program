@@ -1,4 +1,5 @@
-const { demoOrders, statusLabels } = require("../../data/hotel");
+const { statusLabels } = require("../../data/hotel");
+const api = require("../../services/api");
 
 Page({
   data: {
@@ -14,9 +15,10 @@ Page({
   },
 
   loadOrders() {
-    const stored = wx.getStorageSync("orders") || [];
-    const orders = [...stored, ...demoOrders];
-    this.setData({ orders }, this.applyFilter);
+    api
+      .listOrders()
+      .then((orders) => this.setData({ orders }, this.applyFilter))
+      .catch((error) => wx.showToast({ title: error.message, icon: "none" }));
   },
 
   selectTab(e) {
@@ -40,19 +42,17 @@ Page({
 
   payOrder(e) {
     const id = e.currentTarget.dataset.id;
-    const orders = (wx.getStorageSync("orders") || []).map((order) =>
-      order.id === id ? { ...order, status: "paid", paymentStatus: "已支付" } : order
-    );
-    wx.setStorageSync("orders", orders);
-    this.loadOrders();
+    api
+      .mockPayOrder(id)
+      .then(() => this.loadOrders())
+      .catch((error) => wx.showToast({ title: error.message, icon: "none" }));
   },
 
   cancelOrder(e) {
     const id = e.currentTarget.dataset.id;
-    const orders = (wx.getStorageSync("orders") || []).map((order) =>
-      order.id === id ? { ...order, status: "cancelled", paymentStatus: "未支付" } : order
-    );
-    wx.setStorageSync("orders", orders);
-    this.loadOrders();
+    api
+      .cancelOrder(id)
+      .then(() => this.loadOrders())
+      .catch((error) => wx.showToast({ title: error.message, icon: "none" }));
   },
 });

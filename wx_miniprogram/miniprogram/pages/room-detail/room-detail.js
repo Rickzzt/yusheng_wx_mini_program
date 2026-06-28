@@ -1,4 +1,4 @@
-const { getRoom } = require("../../data/hotel");
+const api = require("../../services/api");
 
 Page({
   data: {
@@ -11,15 +11,31 @@ Page({
     total: 0,
   },
 
-  onLoad(query) {
-    const room = getRoom(query.id);
+  async onLoad(query) {
+    const room = await this.loadRoom(query.id);
+    if (!room) return;
     const guests = Math.min(2, room.capacity);
     const guestOptions = Array.from({ length: room.capacity }, (_, index) => index + 1);
     this.setData({ room, guests, guestOptions }, this.refreshTotal);
   },
 
-  onDateChange(e) {
-    this.setData({ [e.currentTarget.dataset.field]: e.detail.value }, this.refreshTotal);
+  async loadRoom(roomId) {
+    try {
+      return await api.getRoomDetail({
+        roomId,
+        checkIn: this.data.checkIn,
+        checkOut: this.data.checkOut,
+      });
+    } catch (error) {
+      wx.showToast({ title: error.message, icon: "none" });
+      return null;
+    }
+  },
+
+  async onDateChange(e) {
+    this.setData({ [e.currentTarget.dataset.field]: e.detail.value });
+    const room = await this.loadRoom(this.data.room.id);
+    if (room) this.setData({ room }, this.refreshTotal);
   },
 
   onGuestsChange(e) {

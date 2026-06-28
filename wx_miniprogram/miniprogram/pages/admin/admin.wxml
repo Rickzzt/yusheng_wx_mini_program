@@ -2,6 +2,7 @@
   <view class="card admin-head">
     <text class="title">轻量经营者后台</text>
     <text class="muted">首版用于查看订单、维护房态价格和记录退款处理；登录与权限需接后端。</text>
+    <button class="ghost-btn init-btn" bindtap="initDatabase">初始化测试数据</button>
   </view>
 
   <view class="module-row">

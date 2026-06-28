@@ -62,3 +62,7 @@
 .refund-btn {
   margin-top: 20rpx;
 }
+
+.init-btn {
+  margin-top: 10rpx;
+}

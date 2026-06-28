@@ -1,10 +1,34 @@
-const { hotel, rooms } = require("../../data/hotel");
+const api = require("../../services/api");
+const { hotel: fallbackHotel, rooms: fallbackRooms } = require("../../data/hotel");
 
 Page({
   data: {
-    hotel,
-    hero: hotel.outdoorImages[0],
-    recommended: rooms.slice(0, 3),
+    hotel: null,
+    hero: "",
+    recommended: [],
+  },
+
+  onLoad() {
+    this.loadHome();
+  },
+
+  async loadHome() {
+    try {
+      const [hotel, rooms] = await Promise.all([api.getHotelProfile(), api.listRooms()]);
+      this.setData({
+        hotel,
+        hero: hotel.outdoorImages[0],
+        recommended: rooms.slice(0, 3),
+      });
+    } catch (error) {
+      console.error("loadHome failed", error);
+      this.setData({
+        hotel: fallbackHotel,
+        hero: fallbackHotel.outdoorImages[0],
+        recommended: fallbackRooms.slice(0, 3),
+      });
+      wx.showToast({ title: error.message, icon: "none" });
+    }
   },
 
   goRooms() {
@@ -22,7 +46,7 @@ Page({
   },
 
   callHotel() {
-    wx.makePhoneCall({ phoneNumber: hotel.phone });
+    wx.makePhoneCall({ phoneNumber: this.data.hotel.phone });
   },
 
   openLocation() {

@@ -1,4 +1,4 @@
-const { getRoom, hotel } = require("../../data/hotel");
+const api = require("../../services/api");
 
 Page({
   data: {
@@ -9,12 +9,18 @@ Page({
     nights: 0,
     total: 0,
     contactName: "",
+    idNo: "",
     phone: "",
     remark: "",
   },
 
-  onLoad(query) {
-    const room = getRoom(query.id);
+  async onLoad(query) {
+    try {
+      const room = await api.getRoomDetail({
+        roomId: query.id,
+        checkIn: query.checkIn || "2026-07-01",
+        checkOut: query.checkOut || "2026-07-02",
+      });
     const checkIn = query.checkIn || "2026-07-01";
     const checkOut = query.checkOut || "2026-07-02";
     const guests = Number(query.guests || 1);
@@ -28,41 +34,38 @@ Page({
       nights,
       total: nights * room.price,
     });
+    } catch (error) {
+      wx.showToast({ title: error.message, icon: "none" });
+    }
   },
 
   onInput(e) {
     this.setData({ [e.currentTarget.dataset.field]: e.detail.value });
   },
 
-  submitOrder() {
+  async submitOrder() {
     const error = this.validate();
     if (error) {
       wx.showToast({ title: error, icon: "none" });
       return;
     }
 
-    const order = {
-      id: `YS${Date.now()}`,
-      roomId: this.data.room.id,
-      roomName: this.data.room.name,
-      cover: this.data.room.images[0],
-      checkIn: this.data.checkIn,
-      checkOut: this.data.checkOut,
-      nights: this.data.nights,
-      guests: this.data.guests,
-      contactName: this.data.contactName,
-      phone: this.data.phone,
-      remark: this.data.remark,
-      amount: this.data.total,
-      status: "pending",
-      paymentStatus: "待支付",
-      cancelRule: this.data.room.cancelRule,
-      address: hotel.address,
-      createdAt: this.formatNow(),
-    };
-
-    const orders = wx.getStorageSync("orders") || [];
-    wx.setStorageSync("orders", [order, ...orders]);
+    let order;
+    try {
+      order = await api.createOrder({
+        roomId: this.data.room.id,
+        checkIn: this.data.checkIn,
+        checkOut: this.data.checkOut,
+        guests: this.data.guests,
+        contactName: this.data.contactName,
+        idNo: this.data.idNo,
+        phone: this.data.phone,
+        remark: this.data.remark,
+      });
+    } catch (apiError) {
+      wx.showToast({ title: apiError.message, icon: "none" });
+      return;
+    }
 
     wx.showModal({
       title: "订单已创建",
@@ -71,7 +74,7 @@ Page({
       cancelText: "稍后",
       success: (res) => {
         if (res.confirm) {
-          this.pay(order.id);
+          this.pay(order.orderId);
         } else {
           wx.switchTab({ url: "/pages/orders/orders" });
         }
@@ -79,14 +82,13 @@ Page({
     });
   },
 
-  pay(orderId) {
-    const orders = wx.getStorageSync("orders") || [];
-    const updated = orders.map((order) =>
-      order.id === orderId
-        ? { ...order, status: "paid", paymentStatus: "已支付", paidAt: this.formatNow() }
-        : order
-    );
-    wx.setStorageSync("orders", updated);
+  async pay(orderId) {
+    try {
+      await api.mockPayOrder(orderId);
+    } catch (error) {
+      wx.showToast({ title: error.message, icon: "none" });
+      return;
+    }
     wx.redirectTo({ url: `/pages/order-detail/order-detail?id=${orderId}` });
   },
 
@@ -94,6 +96,8 @@ Page({
     if (this.data.nights < 1) return "离店日期需晚于入住日期";
     if (this.data.guests > this.data.room.capacity) return "入住人数超过房型上限";
     if (!this.data.contactName.trim()) return "请填写联系人姓名";
+    if (!/^[\u4e00-\u9fa5·]{2,20}$/.test(this.data.contactName.trim())) return "真实姓名只能填写中文";
+    if (!/^\d{17}[\dXx]$/.test(this.data.idNo)) return "请填写正确身份证号";
     if (!/^1[3-9]\d{9}$/.test(this.data.phone)) return "请填写正确手机号";
     return "";
   },
@@ -104,9 +108,4 @@ Page({
     return Math.max(0, Math.ceil((end - start) / 86400000));
   },
 
-  formatNow() {
-    const date = new Date();
-    const pad = (value) => String(value).padStart(2, "0");
-    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}`;
-  },
 });

@@ -1,4 +1,5 @@
 const { rooms, statusLabels } = require("../../data/hotel");
+const api = require("../../services/api");
 
 Page({
   data: {
@@ -15,7 +16,27 @@ Page({
   },
 
   onShow() {
-    this.setData({ orders: wx.getStorageSync("orders") || [] });
+    this.loadAdminData();
+  },
+
+  async loadAdminData() {
+    try {
+      const [cloudRooms, orders] = await Promise.all([api.listRooms(), api.adminListOrders()]);
+      this.setData({ rooms: cloudRooms.length ? cloudRooms : rooms, orders });
+    } catch (error) {
+      wx.showToast({ title: error.message, icon: "none" });
+      this.setData({ rooms });
+    }
+  },
+
+  async initDatabase() {
+    try {
+      const result = await api.initDatabase();
+      wx.showToast({ title: `已初始化 ${result.collections.length} 个集合`, icon: "none" });
+      this.loadAdminData();
+    } catch (error) {
+      wx.showToast({ title: error.message, icon: "none" });
+    }
   },
 
   selectModule(e) {
